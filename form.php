@@ -30,3 +30,32 @@
       <button  type="submit">Envoyer votre message</button>
     </div>
   </form>
+
+  <?php
+
+$errors = [];
+
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // nettoyage et validation des données soumises via le formulaire 
+    if(!isset($_POST['user_name']) || trim($_POST['user_name']) === '') 
+        $errors[] = "Le nom est obligatoire";
+    if(!isset($_POST['user_firstname']) || trim($_POST['user_firstname']) === '') 
+        $errors[] = "Le prénom est obligatoire";
+    if(!isset($_POST['user_email']) || trim($_POST['user_email']) === '') 
+        $errors[] = "L'adresse e-mail est obligatoire";
+    if (!filter_var('user_email', FILTER_VALIDATE_EMAIL)) 
+        $erreur[] = "Le format de l'email est invalide";
+    if(!isset($_POST['phone_number']) || trim($_POST['phone_number']) === '') 
+        $errors[] = "Le numéro de téléphone est obligatoire";
+    if(!isset($_POST['Langages']) || trim($_POST['Langages']) === '') 
+        $errors[] = "La sélection est obligatoire";
+    if(!isset($_POST['user_message']) || trim($_POST['user_message']) === '') 
+        $errors[] = "Le message est obligatoire";
+
+    if(empty($errors)) {
+        // traitement du formulaire
+        // puis redirection
+        header('Location: thanks.php');
+    }
+}
+?>
